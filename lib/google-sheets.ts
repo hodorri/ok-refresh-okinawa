@@ -1,11 +1,21 @@
 import { google } from 'googleapis';
 
+function getCredentials() {
+  // base64 인코딩된 서비스 계정 JSON이 있으면 우선 사용
+  if (process.env.GOOGLE_SERVICE_ACCOUNT_BASE64) {
+    const json = Buffer.from(process.env.GOOGLE_SERVICE_ACCOUNT_BASE64, 'base64').toString();
+    const sa = JSON.parse(json);
+    return { client_email: sa.client_email, private_key: sa.private_key };
+  }
+  return {
+    client_email: process.env.GOOGLE_CLIENT_EMAIL || '',
+    private_key: (process.env.GOOGLE_PRIVATE_KEY || '').replace(/\\n/g, '\n'),
+  };
+}
+
 function getAuth() {
   return new google.auth.GoogleAuth({
-    credentials: {
-      client_email: process.env.GOOGLE_CLIENT_EMAIL,
-      private_key: (process.env.GOOGLE_PRIVATE_KEY || '').replace(/\\n/g, '\n'),
-    },
+    credentials: getCredentials(),
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
   });
 }
