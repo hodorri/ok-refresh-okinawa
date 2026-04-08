@@ -29,21 +29,8 @@ export async function POST(request: NextRequest) {
     });
 
     if (!user) {
-      // 임시 디버그: 첫 번째 행의 키와 값 확인
-      const sample = rows[0] || {};
-      const keys = Object.keys(sample);
       return Response.json(
-        {
-          error: '대상자를 찾을 수 없습니다.',
-          debug: {
-            inputName,
-            inputId,
-            sampleKeys: keys,
-            sampleName: sample['이름'],
-            sampleId: sample['고유사번'],
-            rowCount: rows.length,
-          }
-        },
+        { error: '대상자를 찾을 수 없습니다. 사번과 이름을 다시 확인해 주세요.' },
         { status: 401 }
       );
     }
@@ -64,7 +51,7 @@ export async function POST(request: NextRequest) {
     const errMsg = error instanceof Error ? error.message : String(error);
     console.error('Auth error:', errMsg);
     return Response.json(
-      { error: '서버 오류: ' + errMsg },
+      { error: '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.' },
       { status: 500 }
     );
   }
