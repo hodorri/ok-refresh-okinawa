@@ -16,6 +16,10 @@ export default function AttendancePage() {
 
   const handleSubmit = async () => {
     if (!selected) return;
+    if (selected === '불참' && !reason.trim()) {
+      alert('불참 사유를 입력해 주세요.');
+      return;
+    }
     setLoading(true);
 
     try {
