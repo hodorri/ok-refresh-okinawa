@@ -23,11 +23,11 @@ export default function HeroSection() {
         </div>
         <div className="flex-shrink-0">
           <Image
-            src="/assets/ootman.jpg"
+            src="/assets/ootman.png"
             alt="읏맨 캐릭터"
-            width={320}
-            height={200}
-            className="rounded-2xl shadow-lg"
+            width={280}
+            height={280}
+            className="drop-shadow-lg"
             priority
           />
         </div>

@@ -53,23 +53,23 @@ export default function LoginPage() {
         <div className="w-full max-w-[480px] bg-white rounded-3xl shadow-lg p-8">
           <div className="text-center mb-8">
             <Image
-              src="/assets/ootman.jpg"
+              src="/assets/ootman.png"
               alt="읏맨 캐릭터"
               width={200}
-              height={120}
-              className="mx-auto rounded-2xl mb-4"
+              height={200}
+              className="mx-auto mb-4"
             />
             <h1 className="text-2xl font-extrabold text-ok-navy">연수 참석 확인 페이지</h1>
-            <p className="text-ok-gray-500 mt-2">이름과 사번을 입력해 주세요</p>
+            <p className="text-ok-gray-500 mt-2">사번과 이름을 입력해 주세요</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <input
                 type="text"
-                placeholder="홍길동"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                placeholder="사번 (예: 1234567)"
+                value={employeeId}
+                onChange={(e) => setEmployeeId(e.target.value)}
                 required
                 className="w-full px-4 py-3 rounded-xl border border-ok-gray-300 focus:outline-none focus:border-ok-orange focus:ring-2 focus:ring-ok-orange/20 text-ok-navy placeholder:text-ok-gray-500"
               />
@@ -77,9 +77,9 @@ export default function LoginPage() {
             <div>
               <input
                 type="text"
-                placeholder="1234567"
-                value={employeeId}
-                onChange={(e) => setEmployeeId(e.target.value)}
+                placeholder="이름 (예: 홍길동)"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 required
                 className="w-full px-4 py-3 rounded-xl border border-ok-gray-300 focus:outline-none focus:border-ok-orange focus:ring-2 focus:ring-ok-orange/20 text-ok-navy placeholder:text-ok-gray-500"
               />
@@ -99,7 +99,7 @@ export default function LoginPage() {
           </form>
 
           <p className="text-center text-ok-gray-500 text-xs mt-6">
-            &#128274; 별도 비밀번호 없이 이름과 사번으로 로그인합니다
+            &#128274; 별도 비밀번호 없이 사번과 이름으로 로그인합니다
           </p>
         </div>
       </main>

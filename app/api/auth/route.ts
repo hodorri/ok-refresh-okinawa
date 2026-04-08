@@ -2,31 +2,40 @@ import { NextRequest } from 'next/server';
 import { fetchSheetData } from '@/lib/google-sheets';
 import { getSession } from '@/lib/session';
 
+// 이름에서 뒤의 알파벳(A~Z, a~z) 제거: "홍길동A" → "홍길동"
+function stripTrailingAlpha(name: string): string {
+  return name.replace(/[A-Za-z]+$/, '');
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { name, employeeId } = await request.json();
 
     if (!name || !employeeId) {
       return Response.json(
-        { error: '이름과 사번을 입력해 주세요.' },
+        { error: '사번과 이름을 입력해 주세요.' },
         { status: 400 }
       );
     }
 
     const rows = await fetchSheetData();
-    const user = rows.find(
-      (row) => row['이름'] === name && row['고유사번'] === employeeId
-    );
+    const inputName = stripTrailingAlpha(name.trim());
+
+    const user = rows.find((row) => {
+      const sheetName = stripTrailingAlpha((row['이름'] || '').trim());
+      const sheetId = (row['고유사번'] || '').trim();
+      return sheetName === inputName && sheetId === employeeId.trim();
+    });
 
     if (!user) {
       return Response.json(
-        { error: '대상자를 찾을 수 없습니다. 이름과 사번을 다시 확인해 주세요.' },
+        { error: '대상자를 찾을 수 없습니다. 사번과 이름을 다시 확인해 주세요.' },
         { status: 401 }
       );
     }
 
     const session = await getSession();
-    session.name = name;
+    session.name = user['이름'] || name;
     session.employeeId = employeeId;
     session.rowIndex = parseInt(user._rowIndex, 10);
     session.department = user['소속 부서'] || '';
@@ -40,7 +49,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Auth error:', error);
     return Response.json(
-      { error: '서버 오류가 발생했습니다.' },
+      { error: '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.' },
       { status: 500 }
     );
   }
