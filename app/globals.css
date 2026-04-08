@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+:root {
+  --ok-orange: #FF6B00;
+  --ok-orange-light: #FF8C00;
+  --ok-red: #E63312;
+  --ok-navy: #1A2B4A;
+  --ok-yellow: #FFD600;
+  --ok-bg: #F8F8F8;
+  --ok-white: #FFFFFF;
+  --ok-gray-100: #F5F5F5;
+  --ok-gray-300: #DEDEDE;
+  --ok-gray-500: #999999;
+  --ok-gray-700: #555555;
+
+  --pastel-orange: #FFF3E0;
+  --pastel-mint: #E8F5E9;
+  --pastel-yellow: #FFFDE7;
+  --pastel-lavender: #F3E5F5;
+}
+
+@theme inline {
+  --color-ok-orange: var(--ok-orange);
+  --color-ok-orange-light: var(--ok-orange-light);
+  --color-ok-red: var(--ok-red);
+  --color-ok-navy: var(--ok-navy);
+  --color-ok-yellow: var(--ok-yellow);
+  --color-ok-bg: var(--ok-bg);
+  --color-ok-gray-100: var(--ok-gray-100);
+  --color-ok-gray-300: var(--ok-gray-300);
+  --color-ok-gray-500: var(--ok-gray-500);
+  --color-ok-gray-700: var(--ok-gray-700);
+  --color-pastel-orange: var(--pastel-orange);
+  --color-pastel-mint: var(--pastel-mint);
+  --color-pastel-yellow: var(--pastel-yellow);
+  --color-pastel-lavender: var(--pastel-lavender);
+}
+
+body {
+  background: var(--ok-bg);
+  color: var(--ok-navy);
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Smooth transitions */
+* {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 150ms;
+}
