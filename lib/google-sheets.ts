@@ -43,7 +43,7 @@ export async function fetchSheetData(): Promise<SheetRow[]> {
   return rows.slice(1).map((row, i) => {
     const obj: SheetRow = { _rowIndex: String(i + 2) };
     headers.forEach((header: string, j: number) => {
-      obj[header] = row[j] || '';
+      obj[header.trim().replace(/\s+/g, ' ')] = (row[j] || '').trim();
     });
     return obj;
   });

@@ -20,11 +20,12 @@ export async function POST(request: NextRequest) {
 
     const rows = await fetchSheetData();
     const inputName = stripTrailingAlpha(name.trim());
+    const inputId = employeeId.trim();
 
     const user = rows.find((row) => {
-      const sheetName = stripTrailingAlpha((row['이름'] || '').trim());
-      const sheetId = (row['고유사번'] || '').trim();
-      return sheetName === inputName && sheetId === employeeId.trim();
+      const sheetName = stripTrailingAlpha(row['이름'] || '');
+      const sheetId = row['고유사번'] || '';
+      return sheetName === inputName && sheetId === inputId;
     });
 
     if (!user) {
