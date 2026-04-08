@@ -29,8 +29,21 @@ export async function POST(request: NextRequest) {
     });
 
     if (!user) {
+      // 임시 디버그: 첫 번째 행의 키와 값 확인
+      const sample = rows[0] || {};
+      const keys = Object.keys(sample);
       return Response.json(
-        { error: '대상자를 찾을 수 없습니다. 사번과 이름을 다시 확인해 주세요.' },
+        {
+          error: '대상자를 찾을 수 없습니다.',
+          debug: {
+            inputName,
+            inputId,
+            sampleKeys: keys,
+            sampleName: sample['이름'],
+            sampleId: sample['고유사번'],
+            rowCount: rows.length,
+          }
+        },
         { status: 401 }
       );
     }
