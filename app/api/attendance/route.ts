@@ -61,9 +61,10 @@ export async function PATCH(request: NextRequest) {
 
     return Response.json({ ok: true });
   } catch (error) {
-    console.error('Attendance error:', error);
+    const errMsg = error instanceof Error ? error.message : String(error);
+    console.error('Attendance error:', errMsg);
     return Response.json(
-      { error: '저장 중 오류가 발생했습니다.' },
+      { error: '저장 중 오류: ' + errMsg },
       { status: 500 }
     );
   }
